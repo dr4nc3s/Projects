@@ -14,6 +14,7 @@ int main(void)
 	vector<float> vecWeight{};
 
 	char cNameBuf[MAX_STR_INPUT_LEN] = { 0 };
+	char cFltBuf[MAX_STR_INPUT_LEN] = { 0 };
 	float fWeight;
 
 	for (int i = 0; i < PROMPT_COUNT; i++)
@@ -21,7 +22,9 @@ int main(void)
 		cout << "Please enter the person's name: ";
 		cin.getline(cNameBuf, MAX_STR_INPUT_LEN);
 		cout << "Now please enter the person's weight: ";
-		cin >> fWeight;
+		cin.getline(cFltBuf, MAX_STR_INPUT_LEN);
+
+		fWeight = atof(cFltBuf);
 
 		vecNames.push_back( string(cNameBuf) );
 		vecWeight.push_back(fWeight);
