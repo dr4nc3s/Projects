@@ -3,7 +3,7 @@
 @author David R
 @date 06 Dec 2022 16:42
 
-This is a short little script that will generate a CPP Module based on the
+This is a short little script that will generate a C/CPP Module based on the
 module name passed as an arg from invocation.
 
 '''
@@ -140,6 +140,3 @@ hdrFile = open(f'{moduleName}/{module.getHdrFileName()}', "w")
 printFileStart(hdrFile, module, bIsHeader=True)
 hdrFile.close()
 
-
-
-print("Check it out!")
