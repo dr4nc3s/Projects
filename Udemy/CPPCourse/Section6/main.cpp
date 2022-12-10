@@ -38,8 +38,14 @@ int main(void)
 	string sOwner;
 
 	BankAccount testAcct( "Tester", 1000 );
+	Pizza nyPizza( "Cheese", 10, 14 );
+	nyPizza.addTopping("Pepperoni");
 
 	sOwner = testAcct.getOwner();
+	cout << "Bank Account Owner: " << sOwner << endl;
+
+	cout << nyPizza.getName() << " - $" << nyPizza.getCost() << endl;
+	nyPizza.printToppings();
 
 	return 0;
 }

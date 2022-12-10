@@ -14,6 +14,8 @@
 #define _PIZZA_H 
 
 // Core includes    ------------------------------------------------------------
+#include <string>
+#include <vector>
 
 // Module includes  ------------------------------------------------------------
 
@@ -31,6 +33,23 @@
 
 // Global variables ------------------------------------------------------------
 
+class Pizza 
+{
+	public:
+		Pizza( std::string name, int cost, int diameter );
+
+		void 					addTopping( std::string topping );
+		int 					getCost() const;
+		std::string		getName() const;
+		void 					printToppings();
+
+	private:
+		std::string 	name;
+		int 					cost;
+		int 					diameter;
+
+		std::vector<std::string> toppings;
+};
 
 #endif  //  _PIZZA_H 
 
