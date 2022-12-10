@@ -10,13 +10,16 @@ add_executable( ${PROJECT_NAME} main.cpp )
 
 add_subdirectory(BankAccount)
 add_subdirectory(Pizza)
+add_subdirectory(Circle)
 
 target_include_directories( ${PROJECT_NAME} 
   PUBLIC BankAccount
 	PUBLIC Pizza
+	PUBLIC Circle
 )
 
 target_link_libraries( ${PROJECT_NAME} 
 	BankAccount
   Pizza
+	Circle
 )

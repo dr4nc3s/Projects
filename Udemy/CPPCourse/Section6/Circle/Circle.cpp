@@ -1,23 +1,20 @@
 /*******************************************************************************
-  @file main.cpp
+  @file Circle.cpp
   @date 
   @author 
   @brief 
 
   @version 1.0
 
-  \addtogroup  
+  \addtogroup Circle 
   @{
 *******************************************************************************/
 
 // Core includes    ------------------------------------------------------------
-#include <iostream>
-#include <iomanip>
+#include <cmath>
 
 // Module includes  ------------------------------------------------------------
-#include "BankAccount/BankAccount.h"
-#include "Pizza/Pizza.h"
-#include "Circle/Circle.h"
+#include "Circle.h"
 
 // Defines/Macros   ------------------------------------------------------------
 
@@ -33,30 +30,34 @@
 
 // Global variables ------------------------------------------------------------
 
-using namespace std;
-
-int main(void)
+Circle::Circle()
 {
-	string sOwner;
-
-	BankAccount testAcct( "Tester", 1000 );
-	Pizza nyPizza( "Cheese", 10, 14 );
-	Circle circle0(1.4);
-
-	nyPizza.addTopping("Pepperoni");
-
-	sOwner = testAcct.getOwner();
-	cout << "Bank Account Owner: " << sOwner << endl;
-
-	cout << nyPizza.getName() << " - $" << nyPizza.getCost() << endl;
-	nyPizza.printToppings();
-
-	cout << setprecision(2);
-	cout << "Circle - radius: " << circle0.getRadius() 
-			 << " circumference: " << circle0.getCircumference()
-			 << " area: " << circle0.getArea() << endl;
-
-	return 0;
+	this->radius = UNIT_CIRCLE_RAD;
 }
 
-/** @} main.cpp */
+Circle::Circle(double rad)
+{
+	this->radius = rad;
+}
+
+double Circle::getRadius()
+{
+	return this->radius;
+}
+
+void Circle::setRadius(double rad)
+{
+	this->radius = rad;
+}
+
+double Circle::getCircumference()
+{
+	return (2.0 * this->radius * M_PI);
+}
+
+double Circle::getArea()
+{
+	return (this->radius * this->radius * M_PI);
+}
+
+/** @} Circle.cpp */

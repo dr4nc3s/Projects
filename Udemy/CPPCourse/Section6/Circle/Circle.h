@@ -1,25 +1,25 @@
 /*******************************************************************************
-  @file main.cpp
+  @file Circle.h
   @date 
   @author 
   @brief 
 
   @version 1.0
 
-  \addtogroup  
+  \addtogroup Circle 
   @{
 *******************************************************************************/
 
+#ifndef _CIRCLE_H 
+#define _CIRCLE_H 
+
 // Core includes    ------------------------------------------------------------
-#include <iostream>
-#include <iomanip>
 
 // Module includes  ------------------------------------------------------------
-#include "BankAccount/BankAccount.h"
-#include "Pizza/Pizza.h"
-#include "Circle/Circle.h"
 
 // Defines/Macros   ------------------------------------------------------------
+
+#define UNIT_CIRCLE_RAD		( 1.0 )
 
 // Enumerations     ------------------------------------------------------------
 
@@ -33,30 +33,21 @@
 
 // Global variables ------------------------------------------------------------
 
-using namespace std;
 
-int main(void)
+class Circle
 {
-	string sOwner;
+	public:
+		Circle();
+		Circle(double rad);
+		double 		getRadius();
+		void 			setRadius(double rad);
+		double 		getCircumference();
+		double 		getArea();
 
-	BankAccount testAcct( "Tester", 1000 );
-	Pizza nyPizza( "Cheese", 10, 14 );
-	Circle circle0(1.4);
+	private:
+		double radius;
+};
 
-	nyPizza.addTopping("Pepperoni");
+#endif  //  _CIRCLE_H 
 
-	sOwner = testAcct.getOwner();
-	cout << "Bank Account Owner: " << sOwner << endl;
-
-	cout << nyPizza.getName() << " - $" << nyPizza.getCost() << endl;
-	nyPizza.printToppings();
-
-	cout << setprecision(2);
-	cout << "Circle - radius: " << circle0.getRadius() 
-			 << " circumference: " << circle0.getCircumference()
-			 << " area: " << circle0.getArea() << endl;
-
-	return 0;
-}
-
-/** @} main.cpp */
+/** @} Circle.h */
