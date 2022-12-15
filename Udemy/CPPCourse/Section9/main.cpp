@@ -13,14 +13,16 @@
 // Core includes    ------------------------------------------------------------
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 
 // Module includes  ------------------------------------------------------------
-#include "BankAccount/BankAccount.h"
-#include "Pizza/Pizza.h"
-#include "Circle/Circle.h"
 
 // Defines/Macros   ------------------------------------------------------------
 
+#define MAX_VAL		( 100 )
+#define MIN_VAL		( 0 )
+
+#define SCORES_FILENAME		( "scores.txt" )
 // Enumerations     ------------------------------------------------------------
 
 // Structures       ------------------------------------------------------------
@@ -37,24 +39,37 @@ using namespace std;
 
 int main(void)
 {
-	string sOwner;
+	ifstream fsScores;
+	int avgScore, maxScore, minScore, score, sumScore, countScore;
 
-	BankAccount testAcct( "Tester", 1000 );
-	Pizza nyPizza( "Cheese", 10, 14 );
-	Circle circle0(1.4);
+	avgScore = 0;
+	countScore = 0;
+	sumScore = 0;
+	score = 0;
+	maxScore = MIN_VAL - 1;
+	minScore = MAX_VAL + 1;
 
-	nyPizza.addTopping("Pepperoni");
+	fsScores.open( SCORES_FILENAME );
+	while ( !fsScores.eof() )
+	{
+		fsScores >> score;
 
-	sOwner = testAcct.getOwner();
-	cout << "Bank Account Owner: " << sOwner << endl;
+		if ( (score >= MIN_VAL) && (score <= MAX_VAL) )
+		{
+			countScore++;
 
-	cout << nyPizza.getName() << " - $" << nyPizza.getCost() << endl;
-	nyPizza.printToppings();
+			maxScore = (score > maxScore) ? score : maxScore;
+			minScore = (score < minScore) ? score : minScore;
+			sumScore += score;
+		}
+	}
+	fsScores.close();
 
-	cout << setprecision(2);
-	cout << "Circle - radius: " << circle0.getRadius() 
-			 << " circumference: " << circle0.getCircumference()
-			 << " area: " << circle0.getArea() << endl;
+	avgScore = sumScore / countScore;
+
+	cout << "Max: " << maxScore << endl;
+	cout << "Min: " << minScore << endl;
+	cout << "Avg: " << avgScore << endl;
 
 	return 0;
 }
