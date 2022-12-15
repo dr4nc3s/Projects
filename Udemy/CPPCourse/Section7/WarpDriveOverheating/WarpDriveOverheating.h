@@ -1,25 +1,24 @@
 /*******************************************************************************
-  @file Circle.h
+  @file WarpDriveOverheating.h
   @date 
   @author 
   @brief 
 
   @version 1.0
 
-  \addtogroup Circle 
+  \addtogroup WarpDriveOverheating 
   @{
 *******************************************************************************/
 
-#ifndef _CIRCLE_H 
-#define _CIRCLE_H 
+#ifndef _WARPDRIVEOVERHEATING_H 
+#define _WARPDRIVEOVERHEATING_H 
 
 // Core includes    ------------------------------------------------------------
+#include <stdexcept>
 
 // Module includes  ------------------------------------------------------------
 
 // Defines/Macros   ------------------------------------------------------------
-
-#define UNIT_CIRCLE_RAD		( 1.0 )
 
 // Enumerations     ------------------------------------------------------------
 
@@ -33,21 +32,18 @@
 
 // Global variables ------------------------------------------------------------
 
+// Classes          ------------------------------------------------------------
 
-class Circle
+class WarpDriverOverheating : public std::overflow_error
 {
 	public:
-		Circle();
-		Circle(double rad);
-		double 		getRadius() const;
-		void 			setRadius(double rad);
-		double 		getCircumference() const;
-		double 		getArea() const;
-
+		WarpDriverOverheating() : std::overflow_error("Warp drive has exceeded safe temperature tolerance") { }
+		
 	private:
-		double radius;
+
+
 };
 
-#endif  //  _CIRCLE_H 
+#endif  //  _WARPDRIVEOVERHEATING_H 
 
-/** @} Circle.h */
+/** @} WarpDriveOverheating.h */

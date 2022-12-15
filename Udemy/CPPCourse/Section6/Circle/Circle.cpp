@@ -40,7 +40,7 @@ Circle::Circle(double rad)
 	this->radius = rad;
 }
 
-double Circle::getRadius()
+double Circle::getRadius() const
 {
 	return this->radius;
 }
@@ -50,12 +50,12 @@ void Circle::setRadius(double rad)
 	this->radius = rad;
 }
 
-double Circle::getCircumference()
+double Circle::getCircumference() const
 {
 	return (2.0 * this->radius * M_PI);
 }
 
-double Circle::getArea()
+double Circle::getArea() const
 {
 	return (this->radius * this->radius * M_PI);
 }

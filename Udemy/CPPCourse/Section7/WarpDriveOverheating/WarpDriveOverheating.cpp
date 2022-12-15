@@ -1,25 +1,20 @@
 /*******************************************************************************
-  @file Circle.h
+  @file WarpDriveOverheating.cpp
   @date 
   @author 
   @brief 
 
   @version 1.0
 
-  \addtogroup Circle 
+  \addtogroup WarpDriveOverheating 
   @{
 *******************************************************************************/
-
-#ifndef _CIRCLE_H 
-#define _CIRCLE_H 
 
 // Core includes    ------------------------------------------------------------
 
 // Module includes  ------------------------------------------------------------
 
 // Defines/Macros   ------------------------------------------------------------
-
-#define UNIT_CIRCLE_RAD		( 1.0 )
 
 // Enumerations     ------------------------------------------------------------
 
@@ -33,21 +28,4 @@
 
 // Global variables ------------------------------------------------------------
 
-
-class Circle
-{
-	public:
-		Circle();
-		Circle(double rad);
-		double 		getRadius() const;
-		void 			setRadius(double rad);
-		double 		getCircumference() const;
-		double 		getArea() const;
-
-	private:
-		double radius;
-};
-
-#endif  //  _CIRCLE_H 
-
-/** @} Circle.h */
+/** @} WarpDriveOverheating.cpp */
