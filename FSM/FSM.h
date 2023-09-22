@@ -72,7 +72,6 @@ typedef struct
   FSM_StateArg xCurState;
   FSM_StateArg xNextState;
   FSM_EventArg xLastEvent;
-  bool         bChangeState;
   FSM_StateTableEntry_t const *ptStateTbl;
 } FSM_Control_t, *PFSM_Control_t;
 
