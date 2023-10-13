@@ -11,6 +11,7 @@ module name passed as an arg from invocation.
 # Common Imports  -------------------------------------------------------------
 import sys
 import os
+from datetime import date
 
 # Custom Imports  -------------------------------------------------------------
 
@@ -49,6 +50,7 @@ class CodeModule:
 				self.srcFileName = f'{self.name}.cpp'
 			elif ( self.type == OPT_C_STR ):
 				self.srcFileName = f'{self.name}.c'
+		self.today = date.today().strftime("%d %b %Y")
 
 	def getName(self):
 		return self.name
@@ -58,61 +60,111 @@ class CodeModule:
 
 	def getHdrFileName(self):
 		return self.hdrFileName
+	
+	def addSections(self, outfile):
+		tempStr = "-" * 60
+		outfile.writelines(f'// Core includes    {tempStr}\n\n')
+		outfile.writelines(f'// Module includes  {tempStr}\n\n')
+		outfile.writelines(f'// Defines/Macros   {tempStr}\n\n')
+		outfile.writelines(f'// Enumerations     {tempStr}\n\n')
+		outfile.writelines(f'// Structures       {tempStr}\n\n')
+		outfile.writelines(f'// Local Functions  {tempStr}\n\n')
+		outfile.writelines(f'// Local Variables  {tempStr}\n\n')
+		outfile.writelines(f'// Const variables  {tempStr}\n\n')
+		outfile.writelines(f'// Global variables {tempStr}\n\n')
+
+	def genHeader(self, outfile):
+		# 80-char wide column
+		strStartBlock = "/" + ("*" * 79) + "\n"
+		srtEndBlock = ("*" * 79) + "/\n\n"
+
+		# First is the starting block
+		outfile.writelines(strStartBlock)
+		outfile.writelines(f'  @file {self.hdrFileName}\n')
+		outfile.writelines(f'  @date {self.today}\n')
+		outfile.writelines(f'  @author David R\n')
+		outfile.writelines(f'  @brief \n')
+		outfile.writelines("\n")
+		outfile.writelines(f'  @version 1.0\n')
+		outfile.writelines("\n")
+		outfile.writelines(f'  \\addtogroup {module.getName()} \n')
+		outfile.writelines("  @{\n")
+		outfile.writelines(srtEndBlock)
+
+		# Next is the header guard
+		outfile.writelines(f'#ifndef _{module.getName().upper()}_H \n')
+		outfile.writelines(f'#define _{module.getName().upper()}_H \n')
+		outfile.writelines("\n")
+
+		self.addSections(outfile)
+		tempStr = "-" * 60
+		outfile.writelines(f'// Func Prototypes  {tempStr}\n\n')
+
+		outfile.writelines(f'#ifdef __cplusplus\n')
+		outfile.writelines(f'extern "C" {{\n')
+		outfile.writelines(f'#endif // __cplusplus\n\n\n\n')
+
+		outfile.writelines(f'#ifdef __cplusplus\n')
+		outfile.writelines(f'}};\n')
+		outfile.writelines(f'#endif // __cplusplus\n')
+
+		outfile.writelines("\n")
+		outfile.writelines(f'#endif  //  _{module.getName().upper()}_H \n\n')
+
+		# Common to both Source and Header files	
+		tempStr = "}"
+		outfile.writelines(f'/** @{tempStr} {self.hdrFileName} */\n')
+
+	def genSourceFile(self, outfile):
+		# 80-char wide column
+		strStartBlock = "/" + ("*" * 79) + "\n"
+		srtEndBlock = ("*" * 79) + "/\n\n"
+
+		# First is the starting block
+		outfile.writelines(strStartBlock)
+		outfile.writelines(f'  @file {self.srcFileName}\n')
+		outfile.writelines(f'  @date  {self.today}\n')
+		outfile.writelines(f'  @author David R\n')
+		outfile.writelines(f'  @brief \n')
+		outfile.writelines("\n")
+		outfile.writelines(f'  @version 1.0\n')
+		outfile.writelines("\n")
+		outfile.writelines(f'  \\addtogroup {module.getName()} \n')
+		outfile.writelines("  @{\n")
+		outfile.writelines(srtEndBlock)
+
+		self.addSections(outfile)
+		tempStr = "-" * 60
+		outfile.writelines(f'// Func Definitions {tempStr}\n\n')
+
+		# One function documentation thing
+		outfile.writelines(strStartBlock)
+		outfile.writelines(f' * @function \n')
+		outfile.writelines(f' *\n')
+		outfile.writelines(f' * @brief \n')
+		outfile.writelines(f' *\n')
+		outfile.writelines(f' * @param[io] \n')
+		outfile.writelines(f' * @param[in] \n')
+		outfile.writelines(f' * @param[out] \n')
+		outfile.writelines(f' *\n')
+		outfile.writelines(f' * @return  \n')
+		outfile.writelines(srtEndBlock)
+
+		# Section div for private functions
+		tempStr = "/" * 80
+		outfile.writelines(f'{tempStr}\n')
+		outfile.writelines(f'//  Static Functions \n')
+		outfile.writelines(f'{tempStr}\n\n\n\n')
+
+		# Common to both Source and Header files	
+		tempStr = "}"
+		outfile.writelines(f'/** @{tempStr} {self.srcFileName} */\n')
 
 # Helper functions  -----------------------------------------------------------
 
 def printUsage():
 	print(f'Usage: \npython3 {PROGRAM_NAME} <module_name> {ARG_OPT_CPP}/{ARG_OPT_C}')
  
-def printFileStart(outFile, module, bIsHeader=False):
-	# 80-char wide column
-	strStartBlock = "/" + ("*" * 79) + "\n"
-	srtEndBlock = ("*" * 79) + "/\n\n"
-	filename = ""
-	if (bIsHeader == True):
-		filename = module.getHdrFileName()
-	else:
-		filename = module.getSrcFileName()
-
-	# First is the starting block
-	outFile.writelines(strStartBlock)
-	outFile.writelines(f'  @file {filename}\n')
-	outFile.writelines(f'  @date \n')
-	outFile.writelines(f'  @author \n')
-	outFile.writelines(f'  @brief \n')
-	outFile.writelines("\n")
-	outFile.writelines(f'  @version 1.0\n')
-	outFile.writelines("\n")
-	outFile.writelines(f'  \\addtogroup {module.getName()} \n')
-	outFile.writelines("  @{\n")
-	outFile.writelines(srtEndBlock)
-
-	if (bIsHeader == True):
-		# Next is the header guard
-		outFile.writelines(f'#ifndef _{module.getName().upper()}_H \n')
-		outFile.writelines(f'#define _{module.getName().upper()}_H \n')
-		outFile.writelines("\n")
-
-	# Common stuff for bouth source and header files
-	tempStr = "-" * 60
-	outFile.writelines(f'// Core includes    {tempStr}\n\n')
-	outFile.writelines(f'// Module includes  {tempStr}\n\n')
-	outFile.writelines(f'// Defines/Macros   {tempStr}\n\n')
-	outFile.writelines(f'// Enumerations     {tempStr}\n\n')
-	outFile.writelines(f'// Structures       {tempStr}\n\n')
-	outFile.writelines(f'// Local Variables  {tempStr}\n\n')
-	outFile.writelines(f'// Func Prototypes  {tempStr}\n\n')
-	outFile.writelines(f'// Const variables  {tempStr}\n\n')
-	outFile.writelines(f'// Global variables {tempStr}\n\n')
-  
-	if (bIsHeader == True):
-		outFile.writelines("\n")
-		outFile.writelines(f'#endif  //  _{module.getName().upper()}_H \n\n')
-
-	# Common to both Source and Header files	
-	tempStr = "}"
-	outFile.writelines(f'/** @{tempStr} {filename} */\n')
-  
  
 # Main  -----------------------------------------------------------------------
 
@@ -133,10 +185,10 @@ except OSError as error:
 	print(error)
 
 srcFile = open(f'{moduleName}/{module.getSrcFileName()}', "w")
-printFileStart(srcFile, module)
+module.genSourceFile(srcFile)
 srcFile.close()
 
 hdrFile = open(f'{moduleName}/{module.getHdrFileName()}', "w")
-printFileStart(hdrFile, module, bIsHeader=True)
+module.genHeader(hdrFile)
 hdrFile.close()
 
